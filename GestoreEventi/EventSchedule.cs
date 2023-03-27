@@ -49,9 +49,9 @@ public class EventSchedule
         return str;
     }
 
-    public void EventCount()
+    public int EventCount()
     {
-        Console.WriteLine(events.Count());
+        return events.Count();
     }
 
     public void ClearEvents()
