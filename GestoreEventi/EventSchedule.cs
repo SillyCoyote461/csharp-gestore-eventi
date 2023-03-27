@@ -26,7 +26,7 @@ public class EventSchedule
         events.Add(@event);
     }
 
-    public List<Event> GetEventsDate(DateTime date)
+    public void GetEventsDate(DateTime date)
     {
         List<Event> list = new List<Event>();
         foreach (Event @event in events)
@@ -36,7 +36,17 @@ public class EventSchedule
                 list.Add(@event);
             }
         }
-        return list;
+        if (list.Count > 0)
+        {
+            foreach (Event @event in list)
+            {
+                Console.WriteLine(@event);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Non sono stati trovati eventi in quella data.");
+        }
     }
 
     public static string PrintEvents(List<Event> events)

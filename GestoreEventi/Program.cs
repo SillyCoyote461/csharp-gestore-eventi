@@ -1,4 +1,6 @@
-﻿bool execution = true;
+﻿using System.Collections.Generic;
+
+bool execution = true;
 var nl = Environment.NewLine;
 string line = $"---------------------------------{nl}";
 
@@ -21,7 +23,7 @@ while (executing)
     int listLenght = Convert.ToInt32(Console.ReadLine());
 
     //loop events
-    while (list.EventCount() <= listLenght)
+    while (list.EventCount() < listLenght)
     {
         currentEvent = new Event();
         //inputs
@@ -108,6 +110,14 @@ while (executing)
         }
 
     }
+    Console.WriteLine($"Ci sono {list.EventCount()} eventi nella lista.");
     Console.WriteLine(list);
+
+    Console.Write("Inserisci una data per cercare gli eventi: ");
+    DateTime date = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
+    list.GetEventsDate(date);
+
+    list.ClearEvents();
+
     executing = false;
 }
