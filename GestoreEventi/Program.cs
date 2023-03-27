@@ -2,7 +2,7 @@
 var nl = Environment.NewLine;
 string line = $"---------------------------------{nl}";
 
-List<EventSchedule> lists = new List<EventSchedule>();
+EventSchedule list;
 
 Event currentEvent = null;
 
@@ -30,65 +30,65 @@ while (execution)
     //menu
     switch(cmd)
     {
-        //add event
+        //add event schedule
         case "evento":
-            //inputs
-                //title
-            Console.Write("Inserisci titolo evento: ");
-            string title = Console.ReadLine() ?? "";
-                //capacity
-            Console.Write("Inserisci numero posti evento: ");
-            int capacity = Convert.ToInt32(Console.ReadLine());
-                //date
-            Console.Write("Inserisci la data dell'evento (gg/mm/yyyy): ");
-            string[] dateStr = Console.ReadLine().Split("/");
-            DateTime date = new DateTime(Convert.ToInt32(dateStr[2]), Convert.ToInt32(dateStr[1]), Convert.ToInt32(dateStr[0]));
-
-            //new event and add in list
-            currentEvent = new Event(title, date, capacity);
-                //event list
+            //event list
+                //list name
             Console.Write ("Inserisci il nome del programma eventi dove aggiungerlo: ");
             string listName = Console.ReadLine() ?? null;
-            if (lists.Count == 0)
-            {
-                lists.Add(new EventSchedule(listName));
-            }
-            else
-            {
-                bool newList = true;
-                foreach (var list in lists)
-                {
-                    if (listName == list.title)
-                    {
-                        list.EventToList(currentEvent);
-                        newList = false;
-                    }           
-                }
-                if (newList)
-                {
-                    lists.Add(new EventSchedule(listName));
-                }
-            }
-            //Book seats
-            Console.Write("Quanti posti desideri prenotare? ");
-            int seats = Convert.ToInt32(Console.ReadLine());
-            currentEvent.BookSeat(seats);
+            list = new EventSchedule(listName);
 
-            Console.WriteLine($"{nl}Numero posti prenotati: {currentEvent.Booked}");
-            Console.WriteLine($"Numero posti disponibili: {currentEvent.SeatsLeft}{nl}");
+                //total events
+            Console.Write("Quanti eventi vuoi aggiungere? ");
+            int listLenght = Convert.ToInt32(Console.ReadLine());
 
-            //cancel seat
-            Console.Write("Vuoi disdire dei posti (si/no)? ");
-            cmd = Console.ReadLine();
-
-            if(cmd == "si")
+            //loop events
+            for(int i = 0; i< listLenght; i++)
             {
-                Console.Write("Indica il numero di posti da disdire: ");
-                seats = Convert.ToInt32(Console.ReadLine());
-                currentEvent.CancelSeat(seats);
+                currentEvent = new Event();
+                //inputs
+                    //title
+                Console.Write($"Inserisci titolo del {i + 1}° evento: ");
+                currentEvent.Title = Console.ReadLine() ?? "";
+
+                    //capacity
+                Console.Write("Inserisci numero posti evento: ");
+                currentEvent.Capacity = Convert.ToInt32(Console.ReadLine());
+
+                    //date
+                Console.Write("Inserisci la data dell'evento (gg/mm/yyyy): ");
+                currentEvent.Date = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
+
+                //new event and add in list
+                list.EventToList(currentEvent);
+
+                //Book seats
+                Console.Write("Quanti posti desideri prenotare? ");
+                int seats = Convert.ToInt32(Console.ReadLine());
+                currentEvent.BookSeat(seats);
+
                 Console.WriteLine($"{nl}Numero posti prenotati: {currentEvent.Booked}");
-                Console.WriteLine($"Numero posti disponibili: {currentEvent.SeatsLeft}{nl}");
+                Console.WriteLine($"Numero posti disponibili: {currentEvent.Capacity - currentEvent.Booked}{nl}");
+
+                //cancel seat
+                Console.Write("Vuoi disdire dei posti (si/no)? ");
+                cmd = Console.ReadLine();
+
+                if (cmd == "si")
+                {
+                    Console.Write("Indica il numero di posti da disdire: ");
+                    seats = Convert.ToInt32(Console.ReadLine());
+                    currentEvent.CancelSeat(seats);
+                    Console.WriteLine($"{nl}Numero posti prenotati: {currentEvent.Booked}");
+                    Console.WriteLine($"Numero posti disponibili: {currentEvent.Capacity - currentEvent.Booked}{nl}");
+                }
+                else
+                {
+                    Console.WriteLine(nl);
+                }
+
             }
+            Console.WriteLine(list);
 
             break;
     }

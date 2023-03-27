@@ -16,7 +16,7 @@ public class EventSchedule
         events = new List<Event>();
     }
 
-    public List <Event> Events
+    public List<Event> Events
     {
         get { return events; }
     }
@@ -26,15 +26,48 @@ public class EventSchedule
         events.Add(@event);
     }
 
-    public List<Event> GetEventsDate(DateTime date, List<EventSchedule> listSchedule)
+    public List<Event> GetEventsDate(DateTime date)
     {
-        for(int i = 0; i < listSchedule.Count; i++)
+        List<Event> list = new List<Event>();
+        foreach (Event @event in events)
         {
-            foreach(EventSchedule list in listSchedule)
+            if (@event.Date == date)
             {
-
+                list.Add(@event);
             }
         }
+        return list;
+    }
 
+    public static string PrintEvents(List<Event> events)
+    {
+        string str = "";
+        foreach (Event @event in events)
+        {
+            str += @event.Date.ToString("dd/MM/yyyy") + " - " + @event.Title + $"{Environment.NewLine}";
+        }
+        return str;
+    }
+
+    public void EventCount()
+    {
+        Console.WriteLine(events.Count());
+    }
+
+    public void ClearEvents()
+    {
+        events.Clear();
+    }
+
+    public override string ToString()
+    {
+        string str = title + $"{Environment.NewLine}";
+
+        foreach (Event evento in events)
+        {
+            str += evento.Date.ToString("dd/MM/yyyy") + "-" + evento.Title + $"{Environment.NewLine}";
+        }
+
+        return str;
     }
 }
