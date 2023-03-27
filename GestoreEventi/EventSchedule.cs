@@ -73,9 +73,13 @@ public class EventSchedule
     {
         string str = title + $"{Environment.NewLine}";
 
-        foreach (Event evento in events)
+        foreach (Event @event in events)
         {
-            str += evento.Date.ToString("dd/MM/yyyy") + "-" + evento.Title + $"{Environment.NewLine}";
+            if (@event is Conference conference)
+            {
+                str += conference.Date.ToString("dd/MM/yyyy") + " - " + conference.Title + " - " + conference.Speaker + " - " + conference.Price + "€";
+
+            }
         }
 
         return str;

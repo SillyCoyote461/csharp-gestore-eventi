@@ -14,6 +14,15 @@ public class Event
     public int capacity;
     public int booked;
 
+    //public Event(string title, DateTime date, int capacity)
+    //{
+    //    this.title = title;
+    //    this.date = date;
+    //    this.capacity = capacity;
+    //    booked = 0;
+        
+    //}
+
     //constructor
 
     //getters and setters
@@ -52,6 +61,9 @@ public class Event
     public int Booked {
        get { return booked; }
     }
+
+    public string V { get; }
+    public object Value { get; }
 
     //methods
     public void BookSeat(int seats)
